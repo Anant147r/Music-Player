@@ -2,20 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* glow button */
+.glow-ring {
+  filter: blur(8px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.glow-button {
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 0 10px 3px rgba(0, 255, 0, 0.5),
+    0 0 20px 5px rgba(0, 255, 0, 0.3);
 }
