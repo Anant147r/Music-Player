@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import musicLists from "../data/musicLists";
 
 const useMusicStore = create((set, get) => ({
   isPlaying: false,
@@ -42,4 +43,7 @@ const useMusicStore = create((set, get) => ({
       set({ currentTime: time });
     }
   },
+  musicLists,
 }));
+
+export default useMusicStore;
