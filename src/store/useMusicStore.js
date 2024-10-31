@@ -33,4 +33,13 @@ const useMusicStore = create((set, get) => ({
       set({ isPlaying: !isPlaying });
     }
   },
+
+  //   update current time base on progress bar dragging
+  setCurrentTime: (time) => {
+    const { audio } = get();
+    if (audio) {
+      audio.currentTime = time;
+      set({ currentTime: time });
+    }
+  },
 }));
