@@ -1,8 +1,23 @@
+"use client";
+
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import SongDetails from "./SongDetails";
 import Controls from "./Controls";
+import useMusicStore from "../store/useMusicStore";
+import { useEffect, useRef } from "react";
 
 const MusicPlayer = () => {
+  const { initAudio, musicLists, currentSongIndex } = useMusicStore();
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      initAudio(audio);
+      audio.src = musicLists[currentSongIndex].src;
+    }
+  }, []);
+
   return (
     <div className="p-10 bg-gray-800 rounded-xl shadow-xl w-80">
       {/* Top Header Section */}
@@ -15,6 +30,9 @@ const MusicPlayer = () => {
       </div>
       <SongDetails />
       <Controls />
+
+      {/* hidden audio element */}
+      <audio ref={audioRef}></audio>
     </div>
   );
 };

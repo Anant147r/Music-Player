@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef } from "react";
+import useMusicStore from "../store/useMusicStore";
+
 const SongDetails = () => {
   return (
     <div className="flex flex-col items-center">
