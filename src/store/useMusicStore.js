@@ -8,21 +8,23 @@ const useMusicStore = create((set, get) => ({
   currentTime: 0,
   duration: 0,
 
-  //   initialize the audio element
+  // Initialize the audio element
   initAudio: (audioElement) => {
+    console.log(audioElement);
     set({ audio: audioElement });
 
-    // update duration
+    // Update duration when metadata is loaded
     audioElement.addEventListener("loadedmetadata", () => {
       set({ duration: audioElement.duration });
     });
 
-    // update current time
+    // Update current time as the song plays
     audioElement.addEventListener("timeupdate", () => {
       set({ currentTime: audioElement.currentTime });
     });
   },
-  // play pause the current song
+
+  // Play , Pause the current song
   toggleSong: () => {
     const { audio, isPlaying } = get();
     if (audio) {
@@ -35,14 +37,38 @@ const useMusicStore = create((set, get) => ({
     }
   },
 
-  //   update current time base on progress bar dragging
+  // Next song
+  nextSong: () => {
+    const { audio, currentSongIndex } = get();
+    const nextIndex = (currentSongIndex + 1) % musicLists.length;
+    if (audio) {
+      audio.src = musicLists[nextIndex].src; // Change song source
+      audio.play();
+    }
+    set({ currentSongIndex: nextIndex, isPlaying: true });
+  },
+
+  // Previous song
+  prevSong: () => {
+    const { audio, currentSongIndex } = get();
+    const prevIndex =
+      currentSongIndex === 0 ? musicLists.length - 1 : currentSongIndex - 1;
+    if (audio) {
+      audio.src = musicLists[prevIndex].src; // Change song source
+      audio.play();
+    }
+    set({ currentSongIndex: prevIndex, isPlaying: true });
+  },
+
+  // Update the current time based on progress bar dragging
   setCurrentTime: (time) => {
     const { audio } = get();
     if (audio) {
-      audio.currentTime = time;
-      set({ currentTime: time });
+      audio.currentTime = time; // Set the audio current time
+      set({ currentTime: time }); // Update Zustand state
     }
   },
+
   musicLists,
 }));
 

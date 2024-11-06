@@ -13,6 +13,7 @@ const MusicPlayer = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
+      console.log(audio);
       initAudio(audio);
       audio.src = musicLists[currentSongIndex].src;
     }
@@ -32,7 +33,10 @@ const MusicPlayer = () => {
       <Controls />
 
       {/* hidden audio element */}
-      <audio ref={audioRef}></audio>
+      <audio
+        ref={audioRef}
+        onEnded={() => useMusicStore.getState().nextSong()} // Auto play next song if ending
+      ></audio>
     </div>
   );
 };
